@@ -1,0 +1,42 @@
+题目：Given an array nums of n integers and an integer target, 
+find three integers in nums such that the sum is closest to target.
+ Return the sum of the three integers. 
+You may assume that each input would have exactly one solution.
+
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        // 对数组排序
+        Arrays.sort(nums);
+        int closestSum = 0;
+        int diff = Integer.MAX_VALUE;//java中的int最大值
+
+
+        // 三个指针，将三个数的和转化成两个数的和的问题
+        for(int i=0; i<nums.length-2; i++)
+        {
+            int left = i + 1;
+            int right = nums.length - 1;
+            
+            while(left < right)
+            {
+                int temp_sum = nums[i] + nums[left] + nums[right];
+                int temp_diff = Math.abs(temp_sum - target);
+                // 如果有更小的temp_diff则更新diff
+                if(temp_diff < diff)
+                {
+                    closestSum = temp_sum;
+                    diff = temp_diff;
+                }
+
+                if(temp_sum < target) // 需要更大的sum
+                    left++;
+                else if(temp_sum > target) // 需要更小的sum
+                    right--;
+                else // temp_sum == target
+                    return temp_sum;
+            }
+        }
+
+        return closestSum;
+    }
+}
