@@ -1,0 +1,23 @@
+题目：Given a list of directory info including directory path, and all the files with contents in this directory, you need to find out all the groups of duplicate files in the file system in terms of their paths.
+A group of duplicate files consists of at least two files that have exactly the same content.
+class Solution {
+    public List<List<String>> findDuplicate(String[] paths) {
+        Map<String,ArrayList<String>> map=new HashMap<>();
+        for(String path:paths){
+            String []file=path.split(" ");
+            String root = file[0];
+            for(int i=1;i<file.length;i++){
+                String []content=file[i].split("[(]");
+                ArrayList<String> nowContent = map.getOrDefault(content[1], new ArrayList<>());
+                nowContent.add(root + "/" + content[0]);
+                map.put(content[1], nowContent);
+            }
+        }
+        List<List<String>> lls= new ArrayList<>();
+        for (ArrayList<String> value : map.values()) {
+            if(value.size()>1)
+                lls.add(value);
+        }  
+        return lls;
+    }
+}
