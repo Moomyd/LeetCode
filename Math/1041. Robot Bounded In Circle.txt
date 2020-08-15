@@ -1,0 +1,28 @@
+题目：给定一个机器人，初始位置为（0,0） ，初始方向 为 北，机器人执行一段指令 S。
+S 由三种命令组成 ，“G” （直走）、“L”（左转 90度）、 “R”（右转 90度）。
+求若执行 S 若干次（1次或多次），机器人的轨迹是否为一个圆。
+class Solution {
+    int[][] dirs = {{0,1},{1,0},{0,-1},{-1,0}};
+    
+    public boolean isRobotBounded(String instructions) {
+        
+        int[] curPos = {0,0};
+        int dir = 0;
+        int t = 4;
+        while(t-->0){
+            for(char c:instructions.toCharArray()){
+                if(c == 'G'){
+                    curPos[0] += dirs[dir][0];
+                    curPos[1] += dirs[dir][1];
+                }else if(c == 'R'){
+                    dir = (dir+1)%4;
+                }else{
+                    dir = (dir-1 + 4)%4;
+                }
+            }
+            if(curPos[0] == 0 && curPos[1] == 0 && dir == 0)
+                return true;
+        }
+        return false;
+    }
+}
