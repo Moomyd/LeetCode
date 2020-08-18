@@ -1,0 +1,24 @@
+题意：从数组中选出三个下标i、j、k，使得rating[i]<rating[j]<rating[k]或rating[i]>rating[j]>rating[k]。
+思路：遍历数组(除头尾)，统计左/右边比当前元素小/大的数的个数，相乘求和即可得到以该元素作为中间数得到的组合的个数。
+class Solution {
+    public int numTeams(int[] rating) {
+        int ans = 0;
+        
+        for (int i = 1; i < rating.length - 1; i++) {
+            int[] smaller = new int[2];
+            int[] larger = new int[2];
+
+            for (int j = 0; j < rating.length; j++) {
+                if (rating[j] < rating[i]) {
+                    smaller[j < i ? 0 : 1]++;
+                } else if (rating[j] > rating[i]) {
+                    larger[j < i ? 0 : 1]++;
+                }
+            }
+
+            ans += smaller[0] * larger[1] + smaller[1] * larger[0];
+        }
+
+        return ans;
+    }
+}
