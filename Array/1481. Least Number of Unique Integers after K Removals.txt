@@ -1,0 +1,21 @@
+const findLeastNumOfUniqueInts = function(arr, k) {
+    let obj={}
+    for(let item of arr){
+        if(obj[item]){
+            obj[item]++
+        }else{
+          obj[item]=1 
+        }
+    }
+    let enObj=Object.entries(obj).sort((a,b)=>a[1]-b[1]);
+    let len=enObj.length;
+    for(let item of enObj){
+        if(k>=item[1]){
+            k-=item[1]
+            len--;
+        }else {
+            break;
+        }
+    }
+    return len;
+};
