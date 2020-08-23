@@ -1,0 +1,21 @@
+题意：构造一棵二叉树，树的每个节点的子节点数目为0或2，即没有单子节点的情形。
+给定的arr为按顺序排列的叶结点，树的非叶节点值等于左右子树中最大值的乘积。
+要求构建的树所有非叶节点值之和最小，并返回这个和。
+class Solution {
+    public int mctFromLeafValues(int[] arr) {
+        int l = arr.length;
+        Stack<Integer> stack = new Stack<>();
+        stack.push(Integer.MAX_VALUE);
+        int res = 0;
+        for(int i=0;i<l;i++){
+            while(stack.peek()<=arr[i]){
+                int a = stack.pop();
+                res += a*Math.min(stack.peek(), arr[i]);
+            }
+            stack.push(arr[i]);
+        }
+        while(stack.size()>2)
+            res += stack.pop()*stack.peek();
+        return res;
+    }
+}
