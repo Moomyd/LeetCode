@@ -1,0 +1,33 @@
+class StockSpanner {
+public:
+    vector<int> v;
+    vector<int> vn;
+    StockSpanner() {
+        ;
+    }
+    int next(int price) {
+        v.push_back(price);
+        int sum=1;
+        int n=v.size();
+        if(n-2>=0&&v[n-1]==v[n-2])
+            sum=vn[n-2]+1;
+        else
+        {
+            for(int i=n-2;i>=0;--i)
+            {
+                if(v[n-1]>=v[i])
+                    ++sum;
+                else
+                    break;
+            }
+        }
+        vn.push_back(sum);
+        return sum;
+    }
+};
+ 
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
