@@ -1,0 +1,48 @@
+public class Codec {
+ 
+    Map<String,String> longUrlToShortUrl = new HashMap<>();
+	Map<String,String> shortUrlToLongUrl = new HashMap<>();
+ 
+	private static final String code = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	// Encodes a URL to a shortened URL.
+    public String encode(String longUrl) {
+    	
+    	String encode=null;
+    	if(longUrlToShortUrl.get(longUrl)!=null)
+    	{
+    		return longUrlToShortUrl.get(longUrl);
+    	}
+    	else
+    	{
+    		encode = Codec.encodeUrl();
+    		while(shortUrlToLongUrl.get(encode)!=null)
+    		{
+    			encode = Codec.encodeUrl();
+    		}
+    		longUrlToShortUrl.put(longUrl,encode);
+    		shortUrlToLongUrl.put(encode, longUrl);
+    		return encode;	
+    	}
+    }
+ 
+    public static String encodeUrl(){
+    	String encode="";
+		for(int i=0; i<6; i++)
+		{
+			String str = String.valueOf(code.charAt((int)(Math.random()*61)));
+			encode = encode + str;
+		}
+		return encode;
+    }
+    
+    // Decodes a shortened URL to its original URL.
+    public String decode(String shortUrl) {
+    	String decode = shortUrlToLongUrl.get(shortUrl);
+    	return decode == null ? "" : decode;
+    }
+}
+ 
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.decode(codec.encode(url));
