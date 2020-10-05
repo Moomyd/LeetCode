@@ -1,0 +1,22 @@
+class Solution {
+    public int rangeSum(int[] nums, int n, int left, int right) {
+        List<Integer> list = new ArrayList();
+        list.add(0);
+        for(int i = 0; i < n; i++){
+            int cur = nums[i];
+            for(int j = i+1; j < n; j++){
+                list.add(cur);
+                cur += nums[j];
+            }
+            list.add(cur);
+        }
+        Collections.sort(list);
+        //return list.size();
+        int sum = 0;
+        for(int i = left; i <= right; i++){
+            sum += list.get(i);
+            sum %= 1000000007;
+        }
+        return sum;
+    }
+}
