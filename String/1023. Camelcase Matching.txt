@@ -1,0 +1,6 @@
+class Solution {
+    public List<Boolean> camelMatch(String[] queries, String pattern) {
+        String newPattern = "[a-z]*" + String.join("[a-z]*", pattern.split("")) + "[a-z]*"; 
+        return Arrays.stream(queries).map(q -> q.matches(newPattern)).collect(Collectors.toList());
+    }
+}
